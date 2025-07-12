@@ -35,5 +35,12 @@ jobs:
       - name: Build APK
         run: flutter build apk --split-per-abi
         working-directory: qr_code_preview
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: qr_code_preview/build/app/outputs/flutter-apk/*.apk
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
+
 
 
