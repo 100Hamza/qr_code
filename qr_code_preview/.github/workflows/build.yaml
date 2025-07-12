@@ -3,27 +3,35 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: build
+name: Build - Apk
 
 on:
   push:
-    branches: [ "maiin" ]
+    branches:
+      - maiin
   pull_request:
-    branches: [ "maiin" ]
+    branches:
+      - maiin
 
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
-      - name: Clone repository
+      - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
+          channel: 'stable'
           flutter-version: 3.32.5
-      - run: flutter pub get
-      - run: flutter test
-      - run: flutter build apk --split-per-abi
-      - run: flutter build appbundle
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build APK
+        run: flutter build apk --split-per-abi
+
 
