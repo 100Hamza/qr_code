@@ -33,5 +33,6 @@ jobs:
         run: flutter pub get
       - name: Build APK
         run: flutter build apk --split-per-abi
+        working-directory: qr_code_preview
 
 
